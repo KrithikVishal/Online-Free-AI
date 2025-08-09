@@ -11,4 +11,4 @@ ENV OLLAMA_HOST=0.0.0.0
 
 ENTRYPOINT ["/bin/sh", "-c"]
 
-CMD "ollama serve & sleep 5 && ollama pull deepseek-coder-v2-lite-instruct && wait"
+CMD "ollama serve & sleep 5 && ollama pull deepseek-coder-v2-lite-instruct && ngrok http 11434"

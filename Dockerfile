@@ -1,10 +1,15 @@
 FROM ollama/ollama:latest
 
-EXPOSE 11434
-ENV OLLAMA_HOST=0.0.0.0
+# Install curl & unzip for ngrok
+RUN apt-get update && apt-get install -y curl unzip
 
-# Override entrypoint so we can run a shell
-ENTRYPOINT ["/bin/sh", "-c"]
+# Download and install ngrok
+RUN curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && \
+    echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | tee /etc/apt/sources.list.d/ngrok.list && \
+    apt-get update && apt-get install -y ngrok
 
-# Start Ollama server in background, wait, then pull model
-CMD "ollama serve & sleep 5 && ollama pull deepseek-coder-v2-lite-instruct && wait"
+# Set ngrok token
+ENV NGROK_AUTHTOKEN=30sYoJavxuXia07uNN5bj0fAJPl_7A8MfXAMiL3oH12ADfbLb
+
+# Start Ollama & ngrok
+CMD ollama serve & ngrok http 11434

@@ -10,7 +10,7 @@ RUN curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | tee /etc/apt/truste
     apt-get update && apt-get install -y ngrok
 
 # Set ngrok token
-ENV NGROK_AUTHTOKEN=YOUR_NGROK_TOKEN_HERE
+ENV NGROK_AUTHTOKEN=30sYoJavxuXia07uNN5bj0fAJPl_7A8MfXAMiL3oH12ADfbLb
 
 # Override the default entrypoint so we can run multiple commands
 ENTRYPOINT ["/bin/sh", "-c"]

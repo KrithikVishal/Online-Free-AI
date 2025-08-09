@@ -9,6 +9,10 @@ RUN curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | tee /etc/apt/truste
 ENV NGROK_AUTHTOKEN=30sYoJavxuXia07uNN5bj0fAJPl_7A8MfXAMiL3oH12ADfbLb
 ENV OLLAMA_HOST=0.0.0.0
 
+COPY start.sh /start.sh
+
+RUN chmod +x /start.sh
+
 ENTRYPOINT ["/bin/sh", "-c"]
 
-CMD "ollama serve & sleep 5 && ollama pull deepseek-coder-v2-lite-instruct && ngrok http 11434"
+CMD ["/start.sh"]

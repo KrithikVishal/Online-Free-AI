@@ -1,12 +1,10 @@
 FROM ollama/ollama:latest
 
-# Set the host to 0.0.0.0 so it works on Railway
-ENV OLLAMA_HOST=0.0.0.0
-
-# Pull DeepSeek model at build time
-RUN ollama pull deepseek-coder-v2-lite-instruct
-
+# Expose Ollama default port
 EXPOSE 11434
 
-# Start Ollama server
-CMD ["ollama", "serve"]
+# Set environment variable so Ollama listens on all interfaces
+ENV OLLAMA_HOST=0.0.0.0
+
+# Start Ollama server in background, wait for it, then pull the model, then keep running
+CMD ["sh", "-c", "ollama serve & sleep 5 && ollama pull deepseek-coder-v2-lite-instruct && wait"]
